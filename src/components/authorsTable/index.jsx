@@ -1,25 +1,45 @@
 import React from 'react'
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-const authors = [{id: 1, name: 'Machado de Assis'},
-{id: 2, name: 'Joaquim Manuel de Macedo'},
-{id: 3, name: 'José de Alencar'}]
+const useStyles = makeStyles({
+    table: {
+      minWidth: 650,
+    },
+    tableHead:{
+        background: '#2d4957',        
+    },
+    tableCell:{
+        color: '#fff',
+        fontSize: '1.3rem',
+    }
+});
 
-export default function(){
+const authors = [{ id: 1, name: 'Machado de Assis' },
+{ id: 2, name: 'Joaquim Manuel de Macedo' },
+{ id: 3, name: 'José de Alencar' }]
+
+export default function () {
+    const classes = useStyles();
+
     return (
-        <table>
-            <thead>
-                <tr>
-                    <th>Código</th>
-                    <th>Nome</th>
-                </tr>
-            </thead>
-            <tbody>
-                {authors.map(author => 
-                    <tr key={author.id}>
-                        <td>{author.id}</td>
-                        <td>{author.name}</td>
-                    </tr>)}
-            </tbody>
-        </table>
+        <TableContainer component={Paper}>
+            <Table className={classes.table} aria-label="tabela de autores">
+                <TableHead className={classes.tableHead}>
+                    <TableRow>
+                        <TableCell className={classes.tableCell} align="left">Código</TableCell>
+                        <TableCell className={classes.tableCell} align="left">Nome</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {authors.map(author =>
+                        <TableRow key={author.id}>
+                            <TableCell align="left">{author.id}</TableCell>
+                            <TableCell align="left">{author.name}</TableCell>
+                        </TableRow>
+                    )}
+                </TableBody>
+            </Table>
+        </TableContainer>
     )
 }

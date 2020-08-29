@@ -1,12 +1,48 @@
-import React from 'react'
+import React from 'react';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
-export default function FormNewAuthor(){
-    return (
-        <form action="">
-            <label htmlFor="name">Nome</label>
-            <input type="text" id="name"/>
+export default function FormDialog() {
+  const [open, setOpen] = React.useState(false);
 
-            <button type="submit">Gravar</button>
-        </form>
-    )
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleAdd = () => {
+      alert('Adicionou.')
+      setOpen(false)
+  }
+
+  return (
+    <div>
+      <Button variant="outlined" color="primary" onClick={handleClickOpen}>Novo Autor</Button>
+      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">Novo Autor</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Informe os dados do autor.
+          </DialogContentText>
+          <TextField autoFocus id="name" label="Nome" type="text" fullWidth />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleAdd} color="primary">
+            Adicionar
+          </Button>
+          <Button onClick={handleClose} color="primary">
+            Cancelar
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
 }

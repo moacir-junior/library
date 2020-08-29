@@ -1,24 +1,52 @@
-import React from 'react'
+import React from 'react';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
-export default function FormNewBook(){
-    return (
-        <form action="">
-            <label htmlFor="name">Nome</label>
-            <input type="text" id="name"/>
+export default function FormDialog() {
+  const [open, setOpen] = React.useState(false);
 
-            <label htmlFor="author">Autor</label>
-            <input type="text" id="author"/>
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
-            <label htmlFor="year">Ano</label>
-            <input type="text" id="year"/>
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-            <label htmlFor="eval">Avaliação</label>
-            <input type="text" id="eval"/>
+  const handleAdd = () => {
+      alert('Adicionou.')
+      setOpen(false)
+  }
 
-            <label htmlFor="comment">Comentário</label>
-            <input type="text" id="comment"/>
-
-            <button type="submit">Gravar</button>
-        </form>
-    )
+  return (
+    <div>
+      <Button variant="outlined" color="primary" onClick={handleClickOpen}>Novo Livro</Button>
+      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">Novo Autor</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Informe os dados do livro.
+          </DialogContentText>
+          <TextField autoFocus id="name" label="Nome" type="text" fullWidth />
+          <TextField autoFocus id="author" label="Autor" type="text" fullWidth />
+          <TextField autoFocus id="year" label="Ano" type="text" fullWidth />
+          <TextField autoFocus id="eval" label="Avaliação" type="text" fullWidth />
+          <TextField autoFocus id="comment" label="Comentário" type="text" fullWidth />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleAdd} color="primary">
+            Adicionar
+          </Button>
+          <Button onClick={handleClose} color="primary">
+            Cancelar
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
 }
