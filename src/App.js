@@ -1,10 +1,13 @@
 import React from 'react';
-import Main from './pages/books'
+import MainPage from './pages/main'
+
+import AuthorsPage from './pages/authors'
+import BooksPage from './pages/books'
 
 function App() {
   return (
     <div className="App">
-      <Main />
+      <AuthorsPage />
     </div>
   );
 }
