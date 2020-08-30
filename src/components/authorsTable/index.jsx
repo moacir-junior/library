@@ -1,6 +1,7 @@
 import React from 'react'
-import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Button } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 
 const useStyles = makeStyles({
     table: {
@@ -13,14 +14,19 @@ const useStyles = makeStyles({
         color: '#fff',
         fontSize: '1.3rem',
     }
-});
+})
 
 const authors = [{ id: 1, name: 'Machado de Assis' },
 { id: 2, name: 'Joaquim Manuel de Macedo' },
-{ id: 3, name: 'José de Alencar' }]
+{ id: 3, name: 'José de Alencar' },
+{ id: 4, name: 'Aluisio Azevedo' }]
 
 export default function () {
     const classes = useStyles();
+
+    const handleDelete = () => {
+        alert('Excluido')
+    }
 
     return (
         <TableContainer component={Paper}>
@@ -29,6 +35,7 @@ export default function () {
                     <TableRow>
                         <TableCell className={classes.tableCell} align="left">Código</TableCell>
                         <TableCell className={classes.tableCell} align="left">Nome</TableCell>
+                        <TableCell className={classes.tableCell} align="center">Excluir</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -36,6 +43,11 @@ export default function () {
                         <TableRow key={author.id}>
                             <TableCell align="left">{author.id}</TableCell>
                             <TableCell align="left">{author.name}</TableCell>
+                            <TableCell align="center">
+                                <Button onClick={() => handleDelete()}>
+                                    <DeleteForeverIcon style={{ fontSize: 30, color:'#2d4957' }} />
+                                </Button>
+                            </TableCell>
                         </TableRow>
                     )}
                 </TableBody>

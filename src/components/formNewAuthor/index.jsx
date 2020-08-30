@@ -1,17 +1,37 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import React from 'react'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import Box from '@material-ui/core/Box'
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles((theme) => ({
+  button: {
+    backgroundColor: '#2d4957',
+    color: '#fff',
+    right: '0',
+    marginTop: '2ch',
+    '&:hover':{
+      backgroundColor: '#42687a'
+    }
+  },
+  title: {
+    ...theme.typography.button,
+    fontSize: '1.5rem',
+  }
+}))
 
 export default function FormDialog() {
-  const [open, setOpen] = React.useState(false);
+  const classes = useStyles()
+
+  const [open, setOpen] = React.useState(false)
 
   const handleClickOpen = () => {
-    setOpen(true);
+    setOpen(true)
   };
 
   const handleClose = () => {
@@ -25,7 +45,14 @@ export default function FormDialog() {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>Novo Autor</Button>
+      <Box display="flex">
+        <Box p={1} width="100%" >
+          <h1 className={classes.title}>Autores</h1>
+        </Box>        
+        <Box p={1} flexShrink={0} >
+          <Button className={classes.button} onClick={handleClickOpen}>Novo Autor</Button>
+        </Box>
+      </Box>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Novo Autor</DialogTitle>
         <DialogContent>
@@ -44,5 +71,5 @@ export default function FormDialog() {
         </DialogActions>
       </Dialog>
     </div>
-  );
+  )
 }

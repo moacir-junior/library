@@ -1,6 +1,7 @@
 import React from 'react'
-import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Button } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 
 const useStyles = makeStyles({
     table: {
@@ -13,7 +14,7 @@ const useStyles = makeStyles({
         color: '#fff',
         fontSize: '1.3rem',
     }
-});
+})
 
 const books = [{id: 1, name: 'Helena', author: 'Machado de Assis', year: '1890', eval: 7, comment: 'Cansativo'},
 {id: 2, name: 'A Moreninha', author: 'Joaquim Manuel de Macedo', year: '1895', eval: 8, comment: 'É doce'},
@@ -22,6 +23,10 @@ const books = [{id: 1, name: 'Helena', author: 'Machado de Assis', year: '1890',
 
 export default function () {
     const classes = useStyles();
+
+    const handleDelete = () => {
+        alert('Excluido')
+    }
 
     return (
         <TableContainer component={Paper}>
@@ -34,6 +39,7 @@ export default function () {
                         <TableCell className={classes.tableCell} align="left">Ano</TableCell>
                         <TableCell className={classes.tableCell} align="left">Avaliação</TableCell>
                         <TableCell className={classes.tableCell} align="left">Comentário</TableCell>
+                        <TableCell className={classes.tableCell} align="center">Excluir</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -45,6 +51,11 @@ export default function () {
                             <TableCell align="left">{book.year}</TableCell>
                             <TableCell align="left">{book.eval}</TableCell>
                             <TableCell align="left">{book.comment}</TableCell>
+                            <TableCell align="center">
+                                <Button onClick={() => handleDelete()}>
+                                    <DeleteForeverIcon style={{ fontSize: 30, color:'#2d4957' }} />
+                                </Button>
+                            </TableCell>
                         </TableRow>
                     )}
                 </TableBody>

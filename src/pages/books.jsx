@@ -5,7 +5,6 @@ import FormNewBook from '../components/formNewBook'
 export default function Main(){
     return(
         <>        
-            <h1>Livros</h1>
             <FormNewBook />
             <BooksTable />
         </>
