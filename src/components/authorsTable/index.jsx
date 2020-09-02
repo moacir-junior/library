@@ -33,7 +33,7 @@ export default function () {
             <Table className={classes.table} aria-label="tabela de autores">
                 <TableHead className={classes.tableHead}>
                     <TableRow>
-                        <TableCell className={classes.tableCell} align="left">Código</TableCell>
+                        <TableCell className={classes.tableCell} align="center">Código</TableCell>
                         <TableCell className={classes.tableCell} align="left">Nome</TableCell>
                         <TableCell className={classes.tableCell} align="center">Excluir</TableCell>
                     </TableRow>
@@ -41,7 +41,7 @@ export default function () {
                 <TableBody>
                     {authors.map(author =>
                         <TableRow key={author.id}>
-                            <TableCell align="left">{author.id}</TableCell>
+                            <TableCell align="center">{author.id}</TableCell>
                             <TableCell align="left">{author.name}</TableCell>
                             <TableCell align="center">
                                 <Button onClick={() => handleDelete()}>

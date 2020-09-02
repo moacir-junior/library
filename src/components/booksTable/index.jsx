@@ -33,11 +33,11 @@ export default function () {
             <Table className={classes.table} aria-label="tabela de livros">
                 <TableHead className={classes.tableHead}>
                     <TableRow>
-                        <TableCell className={classes.tableCell} align="left">Código</TableCell>
+                        <TableCell className={classes.tableCell} align="center">Código</TableCell>
                         <TableCell className={classes.tableCell} align="left">Nome</TableCell>
                         <TableCell className={classes.tableCell} align="left">Autor</TableCell>
-                        <TableCell className={classes.tableCell} align="left">Ano</TableCell>
-                        <TableCell className={classes.tableCell} align="left">Avaliação</TableCell>
+                        <TableCell className={classes.tableCell} align="center">Ano</TableCell>
+                        <TableCell className={classes.tableCell} align="center">Avaliação</TableCell>
                         <TableCell className={classes.tableCell} align="left">Comentário</TableCell>
                         <TableCell className={classes.tableCell} align="center">Excluir</TableCell>
                     </TableRow>
@@ -45,11 +45,11 @@ export default function () {
                 <TableBody>
                     {books.map(book =>
                         <TableRow key={book.id}>
-                            <TableCell align="left">{book.id}</TableCell>
+                            <TableCell align="center">{book.id}</TableCell>
                             <TableCell align="left">{book.name}</TableCell>
                             <TableCell align="left">{book.author}</TableCell>
-                            <TableCell align="left">{book.year}</TableCell>
-                            <TableCell align="left">{book.eval}</TableCell>
+                            <TableCell align="center">{book.year}</TableCell>
+                            <TableCell align="center">{book.eval}</TableCell>
                             <TableCell align="left">{book.comment}</TableCell>
                             <TableCell align="center">
                                 <Button onClick={() => handleDelete()}>
