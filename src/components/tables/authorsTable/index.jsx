@@ -21,7 +21,7 @@ const authors = [{ id: 1, name: 'Machado de Assis' },
 { id: 3, name: 'José de Alencar' },
 { id: 4, name: 'Aluisio Azevedo' }]
 
-export default function () {
+export default function AuthorsTable() {
     const classes = useStyles();
 
     const handleDelete = () => {

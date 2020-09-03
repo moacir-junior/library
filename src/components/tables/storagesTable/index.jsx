@@ -16,12 +16,10 @@ const useStyles = makeStyles({
     }
 })
 
-const books = [{id: 1, name: 'Helena', author: 'Machado de Assis', year: '1890', eval: 7, comment: 'Cansativo'},
-{id: 2, name: 'A Moreninha', author: 'Joaquim Manuel de Macedo', year: '1895', eval: 8, comment: 'É doce'},
-{id: 3, name: 'Iracema', author: 'José de Alencar', year: '1897', eval: 8, comment: 'Bom'},
-{id: 4, name: 'O Cortiço', author: 'Aluisio Azevedo', year: '1890', eval: 7, comment: 'Entediante'},]
+const storages = [{ id: 1, name: 'Blumenau' },
+{ id: 2, name: 'Sítio' }]
 
-export default function () {
+export default function StoragesTable() {
     const classes = useStyles();
 
     const handleDelete = () => {
@@ -30,27 +28,19 @@ export default function () {
 
     return (
         <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="tabela de livros">
+            <Table className={classes.table} aria-label="tabela de prateleiras">
                 <TableHead className={classes.tableHead}>
                     <TableRow>
                         <TableCell className={classes.tableCell} align="center">Código</TableCell>
                         <TableCell className={classes.tableCell} align="left">Nome</TableCell>
-                        <TableCell className={classes.tableCell} align="left">Autor</TableCell>
-                        <TableCell className={classes.tableCell} align="center">Ano</TableCell>
-                        <TableCell className={classes.tableCell} align="center">Avaliação</TableCell>
-                        <TableCell className={classes.tableCell} align="left">Comentário</TableCell>
                         <TableCell className={classes.tableCell} align="center">Excluir</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {books.map(book =>
-                        <TableRow key={book.id}>
-                            <TableCell align="center">{book.id}</TableCell>
-                            <TableCell align="left">{book.name}</TableCell>
-                            <TableCell align="left">{book.author}</TableCell>
-                            <TableCell align="center">{book.year}</TableCell>
-                            <TableCell align="center">{book.eval}</TableCell>
-                            <TableCell align="left">{book.comment}</TableCell>
+                    {storages.map(storage =>
+                        <TableRow key={storage.id}>
+                            <TableCell align="center">{storage.id}</TableCell>
+                            <TableCell align="left">{storage.name}</TableCell>
                             <TableCell align="center">
                                 <Button onClick={() => handleDelete()}>
                                     <DeleteForeverIcon style={{ fontSize: 30, color:'#2d4957' }} />
