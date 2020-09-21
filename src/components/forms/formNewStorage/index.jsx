@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Dialog from '@material-ui/core/Dialog'
@@ -7,7 +7,10 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Box from '@material-ui/core/Box'
+import Alert from '@material-ui/lab/Alert'
 import { makeStyles } from '@material-ui/core/styles'
+import { connect } from 'react-redux'
+import { actions } from '../../../actions/storages'
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -25,22 +28,53 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function FormDialog() {
+function AlertInconsistency({fieldInconsistencyId}) {
+  switch(fieldInconsistencyId){
+    case 'name':
+      document.querySelector('#name').focus()
+      return (
+        <Alert variant="filled" severity="warning">
+          Parece que você não informou o nome da prateleira. Preciso desta informação :)
+        </Alert>
+      )
+    default:
+      return <></>
+  }
+}
+
+function FormDialog({add}) {
   const classes = useStyles()
 
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
+  const [fieldInconsistencyId, setFieldInconsistencyId] = useState('')
+  const [name, setName] = useState('')
+
+  const validateFields = (fieldInconsistencyId) => {
+    if(!name){
+      setFieldInconsistencyId('name')
+      return false
+    }
+    return true
+  }
 
   const handleClickOpen = () => {
     setOpen(true)
-  };
+  }
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const handleAdd = () => {
-      alert('Adicionou.')
-      setOpen(false)
+    if(!validateFields()){
+      return
+    }
+
+    add({
+      id: 3,
+      name,
+    })
+    setOpen(false)
   }
 
   return (
@@ -55,11 +89,13 @@ export default function FormDialog() {
       </Box>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Nova Prateleira</DialogTitle>
+        <AlertInconsistency fieldInconsistencyId={fieldInconsistencyId} />
         <DialogContent>
           <DialogContentText>
             Informe os dados da prateleira.
           </DialogContentText>
-          <TextField autoFocus id="name" label="Nome" type="text" fullWidth />
+          <TextField autoFocus id="name" label="Nome" type="text" fullWidth 
+            onChange={(event) => setName(event.target.value)}/>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleAdd} color="primary">
@@ -73,3 +109,9 @@ export default function FormDialog() {
     </div>
   )
 }
+
+const mapDispatchToProps = dispatch => ({
+  add: (storage) => dispatch(actions.add(storage))
+})
+
+export default connect(null, mapDispatchToProps)(FormDialog)

@@ -2,6 +2,8 @@ import React from 'react'
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
+import { connect } from 'react-redux'
+import { actions } from '../../../actions/books'
 
 const useStyles = makeStyles({
     table: {
@@ -16,14 +18,11 @@ const useStyles = makeStyles({
     }
 })
 
-const storages = [{ id: 1, name: 'Blumenau' },
-{ id: 2, name: 'Sítio' }]
-
-export default function StoragesTable() {
-    const classes = useStyles();
+function StoragesTable({storages, remove}) {
+    const classes = useStyles()
 
     const handleDelete = () => {
-        alert('Excluido')
+        remove()
     }
 
     return (
@@ -53,3 +52,13 @@ export default function StoragesTable() {
         </TableContainer>
     )
 }
+
+const mapStateToProps = state => ({
+    storages: state.storagesReducer
+})
+
+const mapDispatchToProps = dispatch => ({
+    remove: () => dispatch(actions.remove()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(StoragesTable)

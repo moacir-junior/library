@@ -1,22 +1,10 @@
 import React from 'react'
 import NavBar from '../components/navBar'
 import Card from '../components/card'
-import Box from '@material-ui/core/Box';
+import Box from '@material-ui/core/Box'
+import { connect } from 'react-redux'
 
-const books = [{id: 1, name: 'Helena', author: 'Machado de Assis', storage: 'Blumenau', year: '1890', eval: 7, comment: 'Cansativo'},
-  {id: 2, name: 'A Moreninha', author: 'Joaquim Manuel de Macedo', storage: 'Blumenau', year: '1895', eval: 8, comment: 'É doce'},
-  {id: 3, name: 'Iracema', author: 'José de Alencar', storage: 'Sítio', year: '1897', eval: 8, comment: 'Bom'},
-  {id: 4, name: 'O Cortiço', author: 'Aluisio Azevedo', storage: 'Blumenau', year: '1890', eval: 7, comment: 'Entediante'},]
-
-const authors = [{ id: 1, name: 'Machado de Assis' },
-  { id: 2, name: 'Joaquim Manuel de Macedo' },
-  { id: 3, name: 'José de Alencar' },
-  { id: 4, name: 'Aluisio Azevedo' }]
-
-const storages = [{ id: 1, name: 'Blumenau' },
-  { id: 2, name: 'Sítio' }]
-
-export default function Main(){
+function Main({books, authors, storages}){
   return (
     <>
       <NavBar />
@@ -47,9 +35,17 @@ export default function Main(){
         <Card 
           link="/prateleiras"
           cardTitle="Quantidade de prateleiras cadastradas"
-          elementTitle={`${storages.length} autores`}
+          elementTitle={`${storages.length} prateleiras`}
         />
       </Box>
     </>
   )
 }
+
+const mapStateToProps = state => ({
+  books: state.booksReducer,
+  authors: state.authorsReducer,
+  storages: state.storagesReducer,
+})
+
+export default connect(mapStateToProps)(Main)

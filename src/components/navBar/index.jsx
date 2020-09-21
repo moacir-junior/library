@@ -1,12 +1,12 @@
-import React from 'react';
+import React from 'react'
 import { Link } from 'react-router-dom'
-import { makeStyles } from '@material-ui/core/styles';
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import HomeIcon from '@material-ui/icons/Home';
-import BookIcon from '@material-ui/icons/Book';
-import AuthorIcon from '@material-ui/icons/Person';
-import StorageIcon from '@material-ui/icons/Storage';
+import { makeStyles } from '@material-ui/core/styles'
+import BottomNavigation from '@material-ui/core/BottomNavigation'
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction'
+import HomeIcon from '@material-ui/icons/Home'
+import BookIcon from '@material-ui/icons/Book'
+import AuthorIcon from '@material-ui/icons/Person'
+import StorageIcon from '@material-ui/icons/Storage'
 
 const useStyles = makeStyles({
   root: {
@@ -17,10 +17,10 @@ const useStyles = makeStyles({
   icon: {
     color: '#fff',
   }
-});
+})
 
 function IconLink(props){
-  const classes = useStyles();
+  const classes = useStyles()
 
   switch(props.type){
     case 'home':
@@ -56,7 +56,7 @@ function IconLink(props){
 }
 
 export default function NavBar() {
-  const classes = useStyles();
+  const classes = useStyles()
  
   return (
     <BottomNavigation
@@ -68,5 +68,5 @@ export default function NavBar() {
       <BottomNavigationAction className={classes.icon} label="Autores" icon={<IconLink type="author" />} />
       <BottomNavigationAction className={classes.icon} label="Prateleiras" icon={<IconLink type="shelves" />} />
     </BottomNavigation>
-  );
+  )
 }

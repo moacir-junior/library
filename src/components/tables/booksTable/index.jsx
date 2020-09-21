@@ -1,7 +1,10 @@
 import React from 'react'
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Button } from '@material-ui/core'
+import StarRateIcon from '@material-ui/icons/StarRate'
 import { makeStyles } from '@material-ui/core/styles'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
+import { connect } from 'react-redux'
+import { actions } from '../../../actions/books'
 
 const useStyles = makeStyles({
     table: {
@@ -13,19 +16,23 @@ const useStyles = makeStyles({
     tableCell:{
         color: '#fff',
         fontSize: '1.3rem',
+    },
+    star:{
+        color: '#deba07',
     }
 })
 
-const books = [{id: 1, name: 'Helena', author: 'Machado de Assis', storage: 'Blumenau', year: '1890', eval: 7, comment: 'Cansativo'},
-{id: 2, name: 'A Moreninha', author: 'Joaquim Manuel de Macedo', storage: 'Blumenau', year: '1895', eval: 8, comment: 'É doce'},
-{id: 3, name: 'Iracema', author: 'José de Alencar', storage: 'Sítio', year: '1897', eval: 8, comment: 'Bom'},
-{id: 4, name: 'O Cortiço', author: 'Aluisio Azevedo', storage: 'Blumenau', year: '1890', eval: 7, comment: 'Entediante'},]
+function StarRate({rate}){
+    const classes = useStyles()
 
-export default function BooksTable() {
-    const classes = useStyles();
+    return Array(rate).fill(1).map((star, index) => <StarRateIcon className={classes.star} key={index}/>)
+}
+
+function BooksTable({books, remove}) {
+    const classes = useStyles()
 
     const handleDelete = () => {
-        alert('Excluido')
+        remove()
     }
 
     return (
@@ -51,7 +58,7 @@ export default function BooksTable() {
                             <TableCell align="left">{book.author}</TableCell>
                             <TableCell align="left">{book.storage}</TableCell>
                             <TableCell align="center">{book.year}</TableCell>
-                            <TableCell align="center">{book.eval}</TableCell>
+                            <TableCell align="center"><StarRate rate={book.evaluation}/></TableCell>
                             <TableCell align="left">{book.comment}</TableCell>
                             <TableCell align="center">
                                 <Button onClick={() => handleDelete()}>
@@ -65,3 +72,13 @@ export default function BooksTable() {
         </TableContainer>
     )
 }
+
+const mapStateToProps = state => ({
+    books: state.booksReducer
+})
+
+const mapDispatchToProps = dispatch => ({
+    remove: () => dispatch(actions.remove()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(BooksTable)

@@ -1,9 +1,9 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import Typography from '@material-ui/core/Typography'
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles({
   link: {
@@ -20,10 +20,10 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
   },
-});
+})
 
 export default function CardInfo(props) {
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <Link to={props.link} className={classes.link}>
@@ -44,5 +44,5 @@ export default function CardInfo(props) {
         </CardContent>
       </Card>
     </Link>
-  );
+  )
 }
