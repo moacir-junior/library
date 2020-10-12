@@ -1,19 +1,13 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
-import Routes from './routes'
-import {Provider} from 'react-redux'
-import store from './store'
+import Root from './root'
 
-function App() {
+export default function App() {
   return (
     <div className="App">
-      <Provider store={store}>
-        <BrowserRouter>
-          <Routes />
-        </BrowserRouter>
-      </Provider>
+      <BrowserRouter >
+        <Root />
+      </BrowserRouter >
     </div>
   )
 }
-
-export default App

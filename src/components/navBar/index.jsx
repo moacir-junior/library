@@ -12,7 +12,6 @@ const useStyles = makeStyles({
   root: {
     width: '100%',
     background: '#2d4957',
-    borderRadius: '5px',
   },
   icon: {
     color: '#fff',

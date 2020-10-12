@@ -14,8 +14,6 @@ import { Box } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import Rating from '@material-ui/lab/Rating'
 import Alert from '@material-ui/lab/Alert'
-import { connect } from 'react-redux'
-import { actions } from '../../../actions/books'
 
 function SelectAuthor({authors, onChange}){
   const [open, setOpen] = useState(false)
@@ -73,7 +71,10 @@ function SelectStorage({storages, onChange}){
   )
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
+  paper: {
+    minWidth: '80%',
+  },
   button: {
     backgroundColor: '#2d4957',
     color: '#fff',
@@ -84,7 +85,6 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   title: {
-    ...theme.typography.button,
     fontSize: '1.5rem',
   }
 }))
@@ -124,7 +124,7 @@ function AlertInconsistency({fieldInconsistencyId}) {
   }
 }
 
-function FormDialog({authors, storages, add}) {
+export default function FormDialog({authors, storages, handleAddBook}) {
   const classes = useStyles()
   
   const [open, setOpen] = useState(false)
@@ -169,16 +169,37 @@ function FormDialog({authors, storages, add}) {
       return
     }
 
-    add({
-      id: 5, 
+    const book = {
       name,
       author,
+      author_id: author.id,
       storage,
+      storage_id: storage.id,
       year,
       comment,
-      evaluation,
-    })
+      eval: evaluation,
+    }
+
+    handleAddBook(book)
     setOpen(false)
+  }
+
+  const handleChangeAuthor = (selectAuthorName) => {
+    authors.forEach(author => {
+      if(author.name === selectAuthorName){
+        setAuthor(author)
+        return
+      }
+    });
+  }
+
+  const handleChangeStorage = (selectStorageName) => {
+    storages.forEach(storage => {
+      if(storage.name === selectStorageName){
+        setStorage(storage)
+        return
+      }
+    })
   }
 
   return (
@@ -188,10 +209,10 @@ function FormDialog({authors, storages, add}) {
           <h1 className={classes.title}>Livros</h1>
         </Box>        
         <Box p={1} flexShrink={0} >
-          <Button className={classes.button} onClick={handleClickOpen}>Novo Livro</Button>
+          <Button className={classes.button} onClick={handleClickOpen}>Novo</Button>
         </Box>
       </Box>
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      <Dialog classes={{paper: classes.paper}} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Novo Autor</DialogTitle>
         <AlertInconsistency fieldInconsistencyId={fieldInconsistencyId} />
         <DialogContent>
@@ -201,11 +222,11 @@ function FormDialog({authors, storages, add}) {
           <TextField autoFocus id="name" label="Nome" type="text" fullWidth 
             onChange={event => setName(event.target.value)} />
           <SelectAuthor authors={authors} id="author"
-            onChange={(event) => setAuthor(event.target.value)} />
+            onChange={event => handleChangeAuthor(event.target.value)} />
           <SelectStorage storages={storages} id="storage"
-            onChange={event => setStorage(event.target.value)} />
-          <TextField id="year" label="Ano" type="number" min="1500" max="2100" fullWidth
-            onChange={event => setYear(event.target.value)}/>
+            onChange={event => handleChangeStorage(event.target.value)} />
+          <TextField id="year" label="Ano" type="number" fullWidth
+            onChange={event => setYear(Number(event.target.value))} />
           <TextField id="comment" label="Comentário" type="text" fullWidth 
             onChange={event => setComment(event.target.value)} />
           <Typography component="legend">Avaliação</Typography>
@@ -216,10 +237,10 @@ function FormDialog({authors, storages, add}) {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleAdd} color="primary">
+          <Button onClick={handleAdd}>
             Adicionar
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleClose}>
             Cancelar
           </Button>
         </DialogActions>
@@ -227,14 +248,3 @@ function FormDialog({authors, storages, add}) {
     </div>
   )
 }
-
-const mapStateToProps = state => ({
-  authors: state.authorsReducer,
-  storages: state.storagesReducer,
-})
-
-const mapDispatchToProps = dispatch => ({
-  add: (book) => dispatch(actions.add(book)),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(FormDialog)

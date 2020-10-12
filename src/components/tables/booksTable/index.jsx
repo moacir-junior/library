@@ -3,12 +3,11 @@ import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper
 import StarRateIcon from '@material-ui/icons/StarRate'
 import { makeStyles } from '@material-ui/core/styles'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
-import { connect } from 'react-redux'
-import { actions } from '../../../actions/books'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 const useStyles = makeStyles({
     table: {
-      minWidth: 650,
+      minWidth: '100%',
     },
     tableHead:{
         background: '#2d4957',        
@@ -24,15 +23,16 @@ const useStyles = makeStyles({
 
 function StarRate({rate}){
     const classes = useStyles()
-
     return Array(rate).fill(1).map((star, index) => <StarRateIcon className={classes.star} key={index}/>)
 }
 
-function BooksTable({books, remove}) {
+export default function BooksTable({books, handleRemoveBook, setSelectBook, setDetailsOpen}) {
     const classes = useStyles()
+    const fullSize = useMediaQuery('(min-width:850px)');
 
-    const handleDelete = () => {
-        remove()
+    const handleRemoveOption = bookId => {
+        console.log(`Livro com Id ${bookId} removido.`)
+        handleRemoveBook(bookId)
     }
 
     return (
@@ -40,31 +40,32 @@ function BooksTable({books, remove}) {
             <Table className={classes.table} aria-label="tabela de livros">
                 <TableHead className={classes.tableHead}>
                     <TableRow>
-                        <TableCell className={classes.tableCell} align="center">Código</TableCell>
-                        <TableCell className={classes.tableCell} align="left">Nome</TableCell>
-                        <TableCell className={classes.tableCell} align="left">Autor</TableCell>
-                        <TableCell className={classes.tableCell} align="left">Prateleira</TableCell>
-                        <TableCell className={classes.tableCell} align="center">Ano</TableCell>
-                        <TableCell className={classes.tableCell} align="center">Avaliação</TableCell>
-                        <TableCell className={classes.tableCell} align="left">Comentário</TableCell>
-                        <TableCell className={classes.tableCell} align="center">Excluir</TableCell>
+                        <TableCell className={classes.tableCell} align="center">Nome</TableCell>
+                        {fullSize && <TableCell className={classes.tableCell} align="center">Autor</TableCell>} 
+                        {fullSize && <TableCell className={classes.tableCell} align="center">Prateleira</TableCell>}
+                        {fullSize && <TableCell className={classes.tableCell} align="center">Ano</TableCell>}
+                        {fullSize && <TableCell className={classes.tableCell} align="center">Avaliação</TableCell>}
+                        {fullSize && <TableCell className={classes.tableCell} align="center">Comentário</TableCell>}
+                        {fullSize && <TableCell className={classes.tableCell} align="center">Opções</TableCell>}
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {books.map(book =>
-                        <TableRow key={book.id}>
-                            <TableCell align="center">{book.id}</TableCell>
-                            <TableCell align="left">{book.name}</TableCell>
-                            <TableCell align="left">{book.author}</TableCell>
-                            <TableCell align="left">{book.storage}</TableCell>
-                            <TableCell align="center">{book.year}</TableCell>
-                            <TableCell align="center"><StarRate rate={book.evaluation}/></TableCell>
-                            <TableCell align="left">{book.comment}</TableCell>
-                            <TableCell align="center">
-                                <Button onClick={() => handleDelete()}>
-                                    <DeleteForeverIcon style={{ fontSize: 30, color:'#2d4957' }} />
+                    {books?.map(book =>
+                        <TableRow key={book.id} onClick={() => {
+                            setSelectBook(book)
+                            setDetailsOpen(true)
+                        }}>
+                            <TableCell align="center">{book.name}</TableCell>
+                            {fullSize && <TableCell align="center">{book.author.name}</TableCell>}
+                            {fullSize && <TableCell align="center">{book.storage.name}</TableCell>}
+                            {fullSize && <TableCell align="center">{book.year}</TableCell>}
+                            {fullSize && <TableCell align="center"><StarRate rate={book.eval}/></TableCell>}
+                            {fullSize && <TableCell align="center">{book.comment}</TableCell>}
+                            {fullSize && <TableCell align="center">
+                                <Button onClick={() => handleRemoveOption(book.id)} tooltip={"Vai excluir"} >
+                                    <DeleteForeverIcon />
                                 </Button>
-                            </TableCell>
+                            </TableCell>}
                         </TableRow>
                     )}
                 </TableBody>
@@ -72,13 +73,3 @@ function BooksTable({books, remove}) {
         </TableContainer>
     )
 }
-
-const mapStateToProps = state => ({
-    books: state.booksReducer
-})
-
-const mapDispatchToProps = dispatch => ({
-    remove: () => dispatch(actions.remove()),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(BooksTable)

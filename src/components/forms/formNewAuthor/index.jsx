@@ -9,10 +9,11 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import Box from '@material-ui/core/Box'
 import Alert from '@material-ui/lab/Alert'
 import { makeStyles } from '@material-ui/core/styles'
-import { connect } from 'react-redux'
-import { actions } from '../../../actions/authors'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
+  paper: {
+    minWidth: '80%',
+  },
   button: {
     backgroundColor: '#2d4957',
     color: '#fff',
@@ -23,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   title: {
-    ...theme.typography.button,
     fontSize: '1.5rem',
   }
 }))
@@ -42,7 +42,7 @@ function AlertInconsistency({fieldInconsistencyId}) {
   }
 }
 
-function FormDialog({add}) {
+export default function FormDialog({handleAddAuthor}) {
   const classes = useStyles()
 
   const [open, setOpen] = useState(false)
@@ -69,12 +69,10 @@ function FormDialog({add}) {
     if(!validateFields()){
       return
     }
-
-      add({
-        id: 4,
-        name,
-      })
-      setOpen(false)
+    handleAddAuthor({
+      name,
+    })
+    setOpen(false)
   }
 
   return (
@@ -84,10 +82,10 @@ function FormDialog({add}) {
           <h1 className={classes.title}>Autores</h1>
         </Box>        
         <Box p={1} flexShrink={0} >
-          <Button className={classes.button} onClick={handleClickOpen}>Novo Autor</Button>
+          <Button className={classes.button} onClick={handleClickOpen}>Novo</Button>
         </Box>
       </Box>
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      <Dialog classes={{paper: classes.paper}} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Novo Autor</DialogTitle>
         <AlertInconsistency fieldInconsistencyId={fieldInconsistencyId} />
         <DialogContent>
@@ -98,10 +96,10 @@ function FormDialog({add}) {
             onChange={(event) => setName(event.target.value)} />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleAdd} color="primary">
+          <Button onClick={handleAdd} >
             Adicionar
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleClose} >
             Cancelar
           </Button>
         </DialogActions>
@@ -109,9 +107,3 @@ function FormDialog({add}) {
     </div>
   )
 }
-
-const mapDispatchToProps = dispatch => ({
-  add: (author) => dispatch(actions.add(author)),
-})
-
-export default connect(null, mapDispatchToProps)(FormDialog)

@@ -1,50 +1,39 @@
 import React from 'react'
-import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Button } from '@material-ui/core'
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
-import { connect } from 'react-redux'
-import { actions } from '../../../actions/books'
 
 const useStyles = makeStyles({
     table: {
-      minWidth: 650,
+        minWidth: '100%',
     },
-    tableHead:{
-        background: '#2d4957',        
+    tableHead: {
+        background: '#2d4957',
     },
-    tableCell:{
+    tableCell: {
         color: '#fff',
         fontSize: '1.3rem',
+        cursor: 'pointer',
     }
 })
 
-function AuthorsTable({authors, remove}) {
+export default function AuthorsTable({ authors, setSelectAuthor, setDetailsOpen }) {
     const classes = useStyles()
-
-    const handleDelete = () => {
-        remove()
-    }
 
     return (
         <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="tabela de autores">
                 <TableHead className={classes.tableHead}>
                     <TableRow>
-                        <TableCell className={classes.tableCell} align="center">Código</TableCell>
-                        <TableCell className={classes.tableCell} align="left">Nome</TableCell>
-                        <TableCell className={classes.tableCell} align="center">Excluir</TableCell>
+                        <TableCell className={classes.tableCell} align="center">Nome</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {authors.map(author =>
-                        <TableRow key={author.id}>
-                            <TableCell align="center">{author.id}</TableCell>
-                            <TableCell align="left">{author.name}</TableCell>
-                            <TableCell align="center">
-                                <Button onClick={() => handleDelete()}>
-                                    <DeleteForeverIcon style={{ fontSize: 30, color:'#2d4957' }} />
-                                </Button>
-                            </TableCell>
+                    {authors?.map(author =>
+                        <TableRow key={author.id} onClick={() => {
+                            setSelectAuthor(author)
+                            setDetailsOpen(true)
+                        }} >
+                            <TableCell align="center">{author.name}</TableCell>
                         </TableRow>
                     )}
                 </TableBody>
@@ -52,13 +41,3 @@ function AuthorsTable({authors, remove}) {
         </TableContainer>
     )
 }
-
-const mapStateToProps = state => ({
-    authors: state.authorsReducer
-})
-
-const mapDispatchToProps = dispatch => ({
-    remove: () => dispatch(actions.remove()),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(AuthorsTable)

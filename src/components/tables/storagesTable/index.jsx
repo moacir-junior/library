@@ -1,13 +1,10 @@
 import React from 'react'
-import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Button } from '@material-ui/core'
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
-import { connect } from 'react-redux'
-import { actions } from '../../../actions/books'
 
 const useStyles = makeStyles({
     table: {
-      minWidth: 650,
+      minWidth: '100%',
     },
     tableHead:{
         background: '#2d4957',        
@@ -18,33 +15,24 @@ const useStyles = makeStyles({
     }
 })
 
-function StoragesTable({storages, remove}) {
+export default function StoragesTable({storages, setSelectStorage, setDetailsOpen}) {
     const classes = useStyles()
-
-    const handleDelete = () => {
-        remove()
-    }
 
     return (
         <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="tabela de prateleiras">
                 <TableHead className={classes.tableHead}>
                     <TableRow>
-                        <TableCell className={classes.tableCell} align="center">Código</TableCell>
-                        <TableCell className={classes.tableCell} align="left">Nome</TableCell>
-                        <TableCell className={classes.tableCell} align="center">Excluir</TableCell>
+                        <TableCell className={classes.tableCell} align="center">Nome</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {storages.map(storage =>
-                        <TableRow key={storage.id}>
-                            <TableCell align="center">{storage.id}</TableCell>
-                            <TableCell align="left">{storage.name}</TableCell>
-                            <TableCell align="center">
-                                <Button onClick={() => handleDelete()}>
-                                    <DeleteForeverIcon style={{ fontSize: 30, color:'#2d4957' }} />
-                                </Button>
-                            </TableCell>
+                    {storages?.map(storage =>
+                        <TableRow key={storage.id} onClick={() => {
+                            setSelectStorage(storage)
+                            setDetailsOpen(true)
+                        }}>
+                            <TableCell align="center">{storage.name}</TableCell>
                         </TableRow>
                     )}
                 </TableBody>
@@ -52,13 +40,3 @@ function StoragesTable({storages, remove}) {
         </TableContainer>
     )
 }
-
-const mapStateToProps = state => ({
-    storages: state.storagesReducer
-})
-
-const mapDispatchToProps = dispatch => ({
-    remove: () => dispatch(actions.remove()),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(StoragesTable)

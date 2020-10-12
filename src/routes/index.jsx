@@ -4,6 +4,7 @@ import MainPage from '../pages/main'
 import AuthorsPage from '../pages/authors'
 import BooksPage from '../pages/books'
 import StoragesPage from '../pages/storages'
+import NotFoundPage from '../pages/notFound'
 
 export default function Routes(){
   return (
@@ -12,7 +13,7 @@ export default function Routes(){
       <Route path="/livros" component={BooksPage} />
       <Route path="/autores" component={AuthorsPage} />
       <Route path="/prateleiras" component={StoragesPage} />
-      <Route component={() => <div>Página 404</div>} />
+      <Route component={NotFoundPage} />
     </Switch>
   )
 }
