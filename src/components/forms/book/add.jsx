@@ -1,75 +1,18 @@
 import React, { useState } from 'react'
-import { Button } from '@material-ui/core'
-import { Dialog } from '@material-ui/core'
-import { Select } from '@material-ui/core'
-import { MenuItem } from '@material-ui/core'
-import { TextField } from '@material-ui/core'
-import { Typography } from '@material-ui/core'
-import { InputLabel } from '@material-ui/core'
-import { DialogTitle } from '@material-ui/core'
-import { DialogActions } from '@material-ui/core'
-import { DialogContent } from '@material-ui/core'
-import { DialogContentText } from '@material-ui/core'
-import { Box } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import Button from '@material-ui/core/Button'
+import Dialog from '@material-ui/core/Dialog'
+import TextField from '@material-ui/core/TextField'
+import Typography from '@material-ui/core/Typography'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import Box from '@material-ui/core/Box'
 import Rating from '@material-ui/lab/Rating'
 import Alert from '@material-ui/lab/Alert'
-
-function SelectAuthor({ authors, onChange }) {
-  const [open, setOpen] = useState(false)
-
-  const handleClose = () => {
-    setOpen(false)
-  }
-
-  const handleOpen = () => {
-    setOpen(true)
-  }
-
-  return (
-    <>
-      <InputLabel>Autor</InputLabel>
-      <Select fullWidth
-        open={open}
-        onClose={handleClose}
-        onOpen={handleOpen}
-        onChange={onChange}
-      >
-        {authors?.map(author =>
-          <MenuItem key={author.id} value={author.name}>{author.name}</MenuItem>
-        )}
-      </Select>
-    </>
-  )
-}
-
-function SelectStorage({ storages, onChange }) {
-  const [open, setOpen] = useState(false)
-
-  const handleClose = () => {
-    setOpen(false)
-  }
-
-  const handleOpen = () => {
-    setOpen(true)
-  }
-
-  return (
-    <>
-      <InputLabel>Prateleira</InputLabel>
-      <Select fullWidth
-        open={open}
-        onClose={handleClose}
-        onOpen={handleOpen}
-        onChange={onChange}
-      >
-        {storages?.map(storage =>
-          <MenuItem key={storage.id} value={storage.name}>{storage.name}</MenuItem>
-        )}
-      </Select>
-    </>
-  )
-}
+import SelectAuthor from './components/selectAuthor'
+import SelectStorage from './components/selectStorage'
+import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(() => ({
   paper: {
@@ -126,7 +69,6 @@ function AlertInconsistency({ fieldInconsistencyId }) {
 
 export default function FormDialog({ authors, storages, handleAddBook }) {
   const classes = useStyles()
-
   const [open, setOpen] = useState(false)
   const [fieldInconsistencyId, setFieldInconsistencyId] = useState('')
   const [name, setName] = useState('')

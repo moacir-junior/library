@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import NavBar from '../components/navBar'
 import BooksTable from '../components/tables/booksTable'
-import FormNewBook from '../components/forms/formNewBook'
 import PageWrapper from '../pages/pageWrapper'
 import BookService from '../services/books'
 import AuthorService from '../services/authors'
 import StorageService from '../services/storages'
 import Details from '../components/details/book'
+import AddBook from '../components/forms/book/add'
+import UpdateBook from '../components/forms/book/update'
 
 export default function Books() {
   const [books, setBooks] = useState([])
@@ -14,6 +15,7 @@ export default function Books() {
   const [storages, setStorages] = useState([])
   const [selectBook, setSelectBook] = useState(null)
   const [detailsOpen, setDetailsOpen] = useState(false)
+  const [updateOpen, setUpdateOpen] = useState(false)
 
   useEffect(() => {
     AuthorService.readAuthors()
@@ -35,6 +37,17 @@ export default function Books() {
       .catch(console.log)
   }
 
+  const handleUpdateBook = book => {
+    AuthorService.updateAuthor(book.id, book)
+    .then(() => {
+      authors.forEach(b => {
+        if(b.id === book.id)
+          b = book
+      })
+    })
+    .catch(console.log)
+  }
+
   const handleRemoveBook = bookId => {
     BookService.deleteBook(bookId)
       .then(() => setBooks(books.filter(book => book.id !== bookId)))
@@ -44,9 +57,10 @@ export default function Books() {
   return (
     <PageWrapper >
       <NavBar />
-      <FormNewBook authors={authors} storages={storages} handleAddBook={handleAddBook} />
+      <AddBook authors={authors} storages={storages} handleAddBook={handleAddBook} />
       <BooksTable books={books} handleRemoveBook={handleRemoveBook} setSelectBook={setSelectBook} setDetailsOpen={setDetailsOpen} />
-      <Details book={selectBook} open={detailsOpen} setOpen={setDetailsOpen} />
+      <Details book={selectBook} open={detailsOpen} setOpen={setDetailsOpen} setUpdateOpen={setUpdateOpen} />
+      <UpdateBook book={selectBook} authors={authors} storages={storages} handleUpdateBook={handleUpdateBook} open={updateOpen} setOpen={setUpdateOpen}/>
     </PageWrapper>
   )
 }

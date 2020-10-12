@@ -24,8 +24,12 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-export default function DetailsAuthor({ book, open, setOpen }) {
+export default function DetailsAuthor({ book, open, setOpen, setUpdateOpen }) {
   const classes = useStyles()
+
+  const handleUpdate = () => {
+    setUpdateOpen(true)
+  }
 
   const handleClose = () => {
     setOpen(false)
@@ -91,7 +95,7 @@ export default function DetailsAuthor({ book, open, setOpen }) {
           </List>
         </DialogContent>
         <DialogActions>
-          <Button>
+          <Button onClick={handleUpdate}>
             Alterar
           </Button>
           <Button onClick={handleClose}>

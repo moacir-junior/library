@@ -19,22 +19,25 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-export default function DetailsAuthor({ author, open, setOpen }) {
+export default function DetailsAuthor({ author, open, setOpen, setUpdateOpen }) {
   const classes = useStyles()
+
+  const handleUpdate = () => {
+    setUpdateOpen(true)
+  }
 
   const handleClose = () => {
     setOpen(false)
   }
 
   return (
-    <div>
-      {open && <Dialog classes={{ paper: classes.paper }} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+    <>
+      {author && <Dialog classes={{ paper: classes.paper }} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">{author.name}</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Detalhes do autor selecionado.
-          </DialogContentText>
-
+        </DialogContentText>
           <List>
             <ListItem>
               <ListItemAvatar>
@@ -45,17 +48,16 @@ export default function DetailsAuthor({ author, open, setOpen }) {
               <ListItemText primary="Nome" secondary={author.name} />
             </ListItem>
           </List>
-
         </DialogContent>
         <DialogActions>
-          <Button>
+          <Button onClick={handleUpdate}>
             Alterar
-          </Button>
+        </Button>
           <Button onClick={handleClose}>
             Fechar
-          </Button>
+        </Button>
         </DialogActions>
       </Dialog>}
-    </div>
+    </>
   )
 }

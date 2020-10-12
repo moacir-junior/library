@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import NavBar from '../components/navBar'
-import FormNewStorage from '../components/forms/formNewStorage'
 import StoragesTable from '../components/tables/storagesTable'
 import PageWrapper from '../pages/pageWrapper'
 import StorageService from '../services/storages'
-import Details from '../components/details/storage'
+import DetailsStorage from '../components/details/storage'
+import AddStorage from '../components/forms/storage/add'
+import UpdateStorage from '../components/forms/storage/update'
 
 export default function Main() {
   const [storages, setStorages] = useState([])
   const [selectStorage, setSelectStorage] = useState(null)
   const [detailsOpen, setDetailsOpen] = useState(false)
+  const [updateOpen, setUpdateOpen] = useState(false)
 
   useEffect(() => {
     StorageService.readStorages()
@@ -26,9 +28,10 @@ export default function Main() {
   return (
     <PageWrapper >
       <NavBar />
-      <FormNewStorage handleAddStorage={handleAddStorage} />
+      <AddStorage handleAddStorage={handleAddStorage} />
       <StoragesTable storages={storages} setSelectStorage={setSelectStorage} setDetailsOpen={setDetailsOpen} />
-      <Details storage={selectStorage} open={detailsOpen} setOpen={setDetailsOpen} />
+      <DetailsStorage storage={selectStorage} open={detailsOpen} setOpen={setDetailsOpen} setUpdateOpen={setUpdateOpen} />
+      <UpdateStorage storage={selectStorage} open={updateOpen} setOpen={setUpdateOpen} />
     </PageWrapper>
   )
 }

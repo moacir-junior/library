@@ -19,8 +19,12 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-export default function DetailsStorage({ storage, open, setOpen }) {
+export default function DetailsStorage({ storage, open, setOpen, setUpdateOpen }) {
   const classes = useStyles()
+
+  const handleUpdate = () => {
+    setUpdateOpen(true)
+  }
 
   const handleClose = () => {
     setOpen(false)
@@ -34,7 +38,6 @@ export default function DetailsStorage({ storage, open, setOpen }) {
           <DialogContentText>
             Detalhes da prateleira selecionada.
           </DialogContentText>
-
           <List>
             <ListItem>
               <ListItemAvatar>
@@ -45,13 +48,12 @@ export default function DetailsStorage({ storage, open, setOpen }) {
               <ListItemText primary="Nome" secondary={storage.name} />
             </ListItem>
           </List>
-
         </DialogContent>
         <DialogActions>
-          <Button>
+          <Button onClick={handleUpdate} >
             Alterar
           </Button>
-          <Button onClick={handleClose}>
+          <Button onClick={handleClose} >
             Fechar
           </Button>
         </DialogActions>
