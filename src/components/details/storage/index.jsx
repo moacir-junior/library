@@ -9,7 +9,7 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
-import ImageIcon from '@material-ui/icons/Image'
+import TextFieldsIcon from '@material-ui/icons/TextFields'
 import Avatar from '@material-ui/core/Avatar'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -19,7 +19,7 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-export default function DetailsStorage({storage, open, setOpen}) {
+export default function DetailsStorage({ storage, open, setOpen }) {
   const classes = useStyles()
 
   const handleClose = () => {
@@ -28,18 +28,18 @@ export default function DetailsStorage({storage, open, setOpen}) {
 
   return (
     <div>
-      {open && <Dialog classes={{paper: classes.paper}} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      {open && <Dialog classes={{ paper: classes.paper }} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">{storage.name}</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Detalhes da prateleira selecionada.
           </DialogContentText>
-          
+
           <List>
             <ListItem>
               <ListItemAvatar>
                 <Avatar>
-                  <ImageIcon />
+                  <TextFieldsIcon />
                 </Avatar>
               </ListItemAvatar>
               <ListItemText primary="Nome" secondary={storage.name} />
@@ -55,7 +55,7 @@ export default function DetailsStorage({storage, open, setOpen}) {
             Fechar
           </Button>
         </DialogActions>
-      </Dialog>} 
+      </Dialog>}
     </div>
   )
 }

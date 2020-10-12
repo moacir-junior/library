@@ -1,9 +1,9 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import { Link } from 'react-router-dom'
+import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles({
   link: {
@@ -39,7 +39,7 @@ export default function CardInfo(props) {
             {props.elementSubtitle}
           </Typography>
           <Typography variant="body2" component="p">
-            {props.information}          
+            {props.information}
           </Typography>
         </CardContent>
       </Card>

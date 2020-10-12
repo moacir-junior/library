@@ -18,10 +18,10 @@ const useStyles = makeStyles({
   }
 })
 
-function IconLink(props){
+function IconLink(props) {
   const classes = useStyles()
 
-  switch(props.type){
+  switch (props.type) {
     case 'home':
       return (
         <Link to="/">
@@ -51,12 +51,12 @@ function IconLink(props){
         <>
         </>
       )
-  } 
+  }
 }
 
 export default function NavBar() {
   const classes = useStyles()
- 
+
   return (
     <BottomNavigation
       showLabels

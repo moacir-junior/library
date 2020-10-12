@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Dialog from '@material-ui/core/Dialog'
@@ -19,7 +19,7 @@ const useStyles = makeStyles(() => ({
     color: '#fff',
     right: '0',
     marginTop: '2ch',
-    '&:hover':{
+    '&:hover': {
       backgroundColor: '#42687a'
     }
   },
@@ -28,8 +28,8 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-function AlertInconsistency({fieldInconsistencyId}) {
-  switch(fieldInconsistencyId){
+function AlertInconsistency({ fieldInconsistencyId }) {
+  switch (fieldInconsistencyId) {
     case 'name':
       document.querySelector('#name').focus()
       return (
@@ -42,7 +42,7 @@ function AlertInconsistency({fieldInconsistencyId}) {
   }
 }
 
-export default function FormDialog({handleAddAuthor}) {
+export default function FormDialog({ handleAddAuthor }) {
   const classes = useStyles()
 
   const [open, setOpen] = useState(false)
@@ -50,7 +50,7 @@ export default function FormDialog({handleAddAuthor}) {
   const [name, setName] = useState('')
 
   const validateFields = (fieldInconsistencyId) => {
-    if(!name){
+    if (!name) {
       setFieldInconsistencyId('name')
       return false
     }
@@ -66,7 +66,7 @@ export default function FormDialog({handleAddAuthor}) {
   }
 
   const handleAdd = () => {
-    if(!validateFields()){
+    if (!validateFields()) {
       return
     }
     handleAddAuthor({
@@ -80,12 +80,12 @@ export default function FormDialog({handleAddAuthor}) {
       <Box display="flex">
         <Box p={1} width="100%" >
           <h1 className={classes.title}>Autores</h1>
-        </Box>        
+        </Box>
         <Box p={1} flexShrink={0} >
           <Button className={classes.button} onClick={handleClickOpen}>Novo</Button>
         </Box>
       </Box>
-      <Dialog classes={{paper: classes.paper}} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      <Dialog classes={{ paper: classes.paper }} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Novo Autor</DialogTitle>
         <AlertInconsistency fieldInconsistencyId={fieldInconsistencyId} />
         <DialogContent>

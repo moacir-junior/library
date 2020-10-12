@@ -1,46 +1,46 @@
 import axios from 'axios'
 
 const createStorage = async storage => {
-  try{
+  try {
     const res = await axios.post('http://localhost:8000/storages', storage)
     return res.data
-  }catch(err){
+  } catch (err) {
     return err
   }
 }
 
 const readStorages = async () => {
-  try{
+  try {
     const res = await axios.get('http://localhost:8000/storages')
     return res.data
-  }catch(err){
+  } catch (err) {
     return err
   }
 }
 
 const readStorage = async storageId => {
-  try{
+  try {
     const res = await axios.get(`http://localhost:8000/storages/${storageId}`)
     return res.data
-  }catch(err){
+  } catch (err) {
     return err
   }
 }
 
 const readStorageByBook = async bookId => {
-  try{
+  try {
     const res = await axios.get(`http://localhost:8000/storages/books/${bookId}`)
     return res.data
-  }catch(err){
+  } catch (err) {
     return err
   }
 }
 
 const updateStorage = async (storageId, storage) => {
-  try{
+  try {
     const res = await axios.patch(`http://localhost:8000/storages/${storageId}`, storage)
     return res.data
-  }catch(err){
+  } catch (err) {
     return err
   }
 }

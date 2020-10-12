@@ -15,7 +15,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Rating from '@material-ui/lab/Rating'
 import Alert from '@material-ui/lab/Alert'
 
-function SelectAuthor({authors, onChange}){
+function SelectAuthor({ authors, onChange }) {
   const [open, setOpen] = useState(false)
 
   const handleClose = () => {
@@ -35,7 +35,7 @@ function SelectAuthor({authors, onChange}){
         onOpen={handleOpen}
         onChange={onChange}
       >
-        {authors?.map(author => 
+        {authors?.map(author =>
           <MenuItem key={author.id} value={author.name}>{author.name}</MenuItem>
         )}
       </Select>
@@ -43,7 +43,7 @@ function SelectAuthor({authors, onChange}){
   )
 }
 
-function SelectStorage({storages, onChange}){
+function SelectStorage({ storages, onChange }) {
   const [open, setOpen] = useState(false)
 
   const handleClose = () => {
@@ -63,7 +63,7 @@ function SelectStorage({storages, onChange}){
         onOpen={handleOpen}
         onChange={onChange}
       >
-        {storages?.map(storage => 
+        {storages?.map(storage =>
           <MenuItem key={storage.id} value={storage.name}>{storage.name}</MenuItem>
         )}
       </Select>
@@ -80,7 +80,7 @@ const useStyles = makeStyles(() => ({
     color: '#fff',
     right: '0',
     marginTop: '2ch',
-    '&:hover':{
+    '&:hover': {
       backgroundColor: '#42687a'
     }
   },
@@ -89,8 +89,8 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-function AlertInconsistency({fieldInconsistencyId}) {
-  switch(fieldInconsistencyId){
+function AlertInconsistency({ fieldInconsistencyId }) {
+  switch (fieldInconsistencyId) {
     case 'name':
       document.querySelector('#name').focus()
       return (
@@ -124,9 +124,9 @@ function AlertInconsistency({fieldInconsistencyId}) {
   }
 }
 
-export default function FormDialog({authors, storages, handleAddBook}) {
+export default function FormDialog({ authors, storages, handleAddBook }) {
   const classes = useStyles()
-  
+
   const [open, setOpen] = useState(false)
   const [fieldInconsistencyId, setFieldInconsistencyId] = useState('')
   const [name, setName] = useState('')
@@ -137,25 +137,25 @@ export default function FormDialog({authors, storages, handleAddBook}) {
   const [evaluation, setEvaluation] = useState(0)
 
   const validateFields = () => {
-    if(!name){
+    if (!name) {
       setFieldInconsistencyId('name')
       return false
     }
-    if(!author){
+    if (!author) {
       setFieldInconsistencyId('author')
       return false
     }
-    if(!storage){
+    if (!storage) {
       setFieldInconsistencyId('storage')
       return false
     }
-    if(!year){
+    if (!year) {
       setFieldInconsistencyId('year')
       return false
     }
     return true
   }
-  
+
   const handleClickOpen = () => {
     setOpen(true)
   }
@@ -165,7 +165,7 @@ export default function FormDialog({authors, storages, handleAddBook}) {
   }
 
   const handleAdd = () => {
-    if(!validateFields()){
+    if (!validateFields()) {
       return
     }
 
@@ -186,7 +186,7 @@ export default function FormDialog({authors, storages, handleAddBook}) {
 
   const handleChangeAuthor = (selectAuthorName) => {
     authors.forEach(author => {
-      if(author.name === selectAuthorName){
+      if (author.name === selectAuthorName) {
         setAuthor(author)
         return
       }
@@ -195,7 +195,7 @@ export default function FormDialog({authors, storages, handleAddBook}) {
 
   const handleChangeStorage = (selectStorageName) => {
     storages.forEach(storage => {
-      if(storage.name === selectStorageName){
+      if (storage.name === selectStorageName) {
         setStorage(storage)
         return
       }
@@ -207,19 +207,19 @@ export default function FormDialog({authors, storages, handleAddBook}) {
       <Box display="flex">
         <Box p={1} width="100%" >
           <h1 className={classes.title}>Livros</h1>
-        </Box>        
+        </Box>
         <Box p={1} flexShrink={0} >
           <Button className={classes.button} onClick={handleClickOpen}>Novo</Button>
         </Box>
       </Box>
-      <Dialog classes={{paper: classes.paper}} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      <Dialog classes={{ paper: classes.paper }} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Novo Autor</DialogTitle>
         <AlertInconsistency fieldInconsistencyId={fieldInconsistencyId} />
         <DialogContent>
           <DialogContentText>
             Informe os dados do livro.
           </DialogContentText>
-          <TextField autoFocus id="name" label="Nome" type="text" fullWidth 
+          <TextField autoFocus id="name" label="Nome" type="text" fullWidth
             onChange={event => setName(event.target.value)} />
           <SelectAuthor authors={authors} id="author"
             onChange={event => handleChangeAuthor(event.target.value)} />
@@ -227,10 +227,10 @@ export default function FormDialog({authors, storages, handleAddBook}) {
             onChange={event => handleChangeStorage(event.target.value)} />
           <TextField id="year" label="Ano" type="number" fullWidth
             onChange={event => setYear(Number(event.target.value))} />
-          <TextField id="comment" label="Comentário" type="text" fullWidth 
+          <TextField id="comment" label="Comentário" type="text" fullWidth
             onChange={event => setComment(event.target.value)} />
           <Typography component="legend">Avaliação</Typography>
-          <Rating 
+          <Rating
             name="simple-controlled"
             value={evaluation}
             onChange={(event, newValue) => setEvaluation(newValue)}

@@ -9,8 +9,8 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
-import ImageIcon from '@material-ui/icons/Image'
 import Avatar from '@material-ui/core/Avatar'
+import TextFieldsIcon from '@material-ui/icons/TextFields';
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(() => ({
@@ -19,7 +19,7 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-export default function DetailsAuthor({author, open, setOpen}) {
+export default function DetailsAuthor({ author, open, setOpen }) {
   const classes = useStyles()
 
   const handleClose = () => {
@@ -28,18 +28,18 @@ export default function DetailsAuthor({author, open, setOpen}) {
 
   return (
     <div>
-      {open && <Dialog classes={{paper: classes.paper}} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      {open && <Dialog classes={{ paper: classes.paper }} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">{author.name}</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Detalhes do autor selecionado.
           </DialogContentText>
-          
+
           <List>
             <ListItem>
               <ListItemAvatar>
                 <Avatar>
-                  <ImageIcon />
+                  <TextFieldsIcon />
                 </Avatar>
               </ListItemAvatar>
               <ListItemText primary="Nome" secondary={author.name} />
@@ -55,7 +55,7 @@ export default function DetailsAuthor({author, open, setOpen}) {
             Fechar
           </Button>
         </DialogActions>
-      </Dialog>} 
+      </Dialog>}
     </div>
   )
 }

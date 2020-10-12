@@ -6,7 +6,7 @@ import BooksPage from '../pages/books'
 import StoragesPage from '../pages/storages'
 import NotFoundPage from '../pages/notFound'
 
-export default function Routes(){
+export default function Routes() {
   return (
     <Switch>
       <Route path='/' component={MainPage} exact />

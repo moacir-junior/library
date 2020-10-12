@@ -10,12 +10,12 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Avatar from '@material-ui/core/Avatar'
-import TextFieldsIcon from '@material-ui/icons/TextFields';
-import PersonIcon from '@material-ui/icons/Person';
-import StorageIcon from '@material-ui/icons/Storage';
-import EventIcon from '@material-ui/icons/Event';
-import StarRateIcon from '@material-ui/icons/StarRate';
-import ModeCommentIcon from '@material-ui/icons/ModeComment';
+import TextFieldsIcon from '@material-ui/icons/TextFields'
+import PersonIcon from '@material-ui/icons/Person'
+import StorageIcon from '@material-ui/icons/Storage'
+import EventIcon from '@material-ui/icons/Event'
+import StarRateIcon from '@material-ui/icons/StarRate'
+import ModeCommentIcon from '@material-ui/icons/ModeComment'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(() => ({
