@@ -24,6 +24,7 @@ export default function DetailsStorage({ storage, open, setOpen, setUpdateOpen }
 
   const handleUpdate = () => {
     setUpdateOpen(true)
+    setOpen(false)
   }
 
   const handleClose = () => {

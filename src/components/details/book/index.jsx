@@ -29,6 +29,7 @@ export default function DetailsAuthor({ book, open, setOpen, setUpdateOpen }) {
 
   const handleUpdate = () => {
     setUpdateOpen(true)
+    setOpen(false)
   }
 
   const handleClose = () => {

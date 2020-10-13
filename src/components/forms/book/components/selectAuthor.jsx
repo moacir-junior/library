@@ -22,7 +22,7 @@ export default function SelectAuthor({ authors, selectedAuthor, onChange }) {
         onClose={handleClose}
         onOpen={handleOpen}
         onChange={onChange}
-        value={selectedAuthor.name}
+        value={selectedAuthor?.name}
       >
         {authors?.map(author =>
           <MenuItem key={author.id} value={author.name}>{author.name}</MenuItem>

@@ -13,10 +13,14 @@ export default function Main() {
   const [detailsOpen, setDetailsOpen] = useState(false)
   const [updateOpen, setUpdateOpen] = useState(false)
 
-  useEffect(() => {
+  const readStorage = () => {
     StorageService.readStorages()
       .then(storages => setStorages(storages))
       .catch(console.log)
+  }
+
+  useEffect(() => {
+    readStorage()
   }, [])
 
   const handleAddStorage = storage => {
@@ -25,13 +29,19 @@ export default function Main() {
       .catch(console.log)
   }
 
+  const handleUpdateStorage = storage => {
+    StorageService.updateStorage(storage.id, storage)
+    .then(() => readStorage())
+    .catch(console.log)
+  }
+
   return (
     <PageWrapper >
       <NavBar />
       <AddStorage handleAddStorage={handleAddStorage} />
       <StoragesTable storages={storages} setSelectStorage={setSelectStorage} setDetailsOpen={setDetailsOpen} />
       <DetailsStorage storage={selectStorage} open={detailsOpen} setOpen={setDetailsOpen} setUpdateOpen={setUpdateOpen} />
-      <UpdateStorage storage={selectStorage} open={updateOpen} setOpen={setUpdateOpen} />
+      <UpdateStorage storage={selectStorage} handleUpdateStorage={handleUpdateStorage} open={updateOpen} setOpen={setUpdateOpen} />
     </PageWrapper>
   )
 }

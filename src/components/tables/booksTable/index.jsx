@@ -28,7 +28,7 @@ function StarRate({ rate }) {
 
 export default function BooksTable({ books, handleRemoveBook, setSelectBook, setDetailsOpen }) {
   const classes = useStyles()
-  const fullSize = useMediaQuery('(min-width:850px)');
+  const fullSize = useMediaQuery('(min-width:1050px)');
 
   const handleRemoveOption = bookId => {
     console.log(`Livro com Id ${bookId} removido.`)

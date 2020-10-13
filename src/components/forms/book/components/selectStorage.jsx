@@ -22,7 +22,7 @@ export default function SelectStorage({ storages, selectedStorage, onChange }) {
         onClose={handleClose}
         onOpen={handleOpen}
         onChange={onChange}
-        value={selectedStorage}
+        value={selectedStorage?.name}
       >
         {storages?.map(storage =>
           <MenuItem key={storage.id} value={storage.name}>{storage.name}</MenuItem>

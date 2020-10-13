@@ -13,10 +13,14 @@ export default function Authors() {
   const [detailsOpen, setDetailsOpen] = useState(false)
   const [updateOpen, setUpdateOpen] = useState(false)
 
-  useEffect(() => {
+  const readAuthors = () => {
     AuthorService.readAuthors()
       .then(authors => setAuthors(authors))
       .catch(console.log)
+  }
+
+  useEffect(() => {
+    readAuthors()
   }, [])
 
   const handleAddAuthor = author => {
@@ -27,12 +31,7 @@ export default function Authors() {
 
   const handleUpdateAuthor = author => {
     AuthorService.updateAuthor(author.id, author)
-    .then(() => {
-      authors.forEach(auth => {
-        if(auth.id === author.id)
-          auth = author
-      })
-    })
+    .then(() => readAuthors())
     .catch(console.log)
   }
 
