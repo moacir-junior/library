@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import NavBar from '../components/navBar'
+import Options from '../components/options'
 import StoragesTable from '../components/tables/storagesTable'
 import PageWrapper from '../pages/pageWrapper'
 import StorageService from '../services/storages'
@@ -10,6 +11,7 @@ import UpdateStorage from '../components/forms/storage/update'
 export default function Main() {
   const [storages, setStorages] = useState([])
   const [selectStorage, setSelectStorage] = useState(null)
+  const [addOpen, setAddOpen] = useState(false)
   const [detailsOpen, setDetailsOpen] = useState(false)
   const [updateOpen, setUpdateOpen] = useState(false)
 
@@ -25,7 +27,7 @@ export default function Main() {
 
   const handleAddStorage = storage => {
     StorageService.createStorage(storage)
-      .then(() => setStorages([...storages, storage]))
+      .then(res => setStorages([...storages, res]))
       .catch(console.log)
   }
 
@@ -38,10 +40,32 @@ export default function Main() {
   return (
     <PageWrapper >
       <NavBar />
-      <AddStorage handleAddStorage={handleAddStorage} />
-      <StoragesTable storages={storages} setSelectStorage={setSelectStorage} setDetailsOpen={setDetailsOpen} />
-      <DetailsStorage storage={selectStorage} open={detailsOpen} setOpen={setDetailsOpen} setUpdateOpen={setUpdateOpen} />
-      <UpdateStorage storage={selectStorage} handleUpdateStorage={handleUpdateStorage} open={updateOpen} setOpen={setUpdateOpen} />
+      <Options 
+        title={'Prateleiras'} 
+        handleClickAdd={() => setAddOpen(true)} 
+      />
+      <AddStorage 
+        open={addOpen} 
+        setOpen={setAddOpen} 
+        handleAddStorage={handleAddStorage}
+      />
+      <StoragesTable 
+        storages={storages} 
+        setSelectStorage={setSelectStorage} 
+        setDetailsOpen={setDetailsOpen} 
+      />
+      <DetailsStorage 
+        storage={selectStorage} 
+        open={detailsOpen} 
+        setOpen={setDetailsOpen} 
+        setUpdateOpen={setUpdateOpen} 
+      />
+      <UpdateStorage 
+        storage={selectStorage} 
+        handleUpdateStorage={handleUpdateStorage} 
+        open={updateOpen} 
+        setOpen={setUpdateOpen} 
+      />
     </PageWrapper>
   )
 }

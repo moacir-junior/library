@@ -17,37 +17,11 @@ const useStyles = makeStyles(() => ({
   paper: {
     minWidth: '80%',
   },
-  button: {
-    backgroundColor: '#2d4957',
-    color: '#fff',
-    right: '0',
-    marginTop: '2ch',
-    '&:hover': {
-      backgroundColor: '#42687a'
-    }
-  },
-  title: {
-    fontSize: '1.5rem',
-  }
 }))
-
-function AlertInconsistency({ fieldInconsistencyId }) {
-  switch (fieldInconsistencyId) {
-    case 'name':
-      document.querySelector('#name').focus()
-      return (
-        <Alert variant="filled" severity="warning">
-          Parece que você não informou o nome do autor. Preciso desta informação :)
-        </Alert>
-      )
-    default:
-      return <></>
-  }
-}
 
 export default function FormDialog({ book, authors, storages, handleUpdateBook, open, setOpen }) {
   const classes = useStyles()
-  const [fieldInconsistencyId, setFieldInconsistencyId] = useState('')
+  const [inconsistency, setInconsistency] = useState('')
   const [name, setName] = useState('')
   const [author, setAuthor] = useState(null)
   const [storage, setStorage] = useState(null)
@@ -64,11 +38,23 @@ export default function FormDialog({ book, authors, storages, handleUpdateBook, 
       setComment(book.comment)
       setEvaluation(book.eval)
     }
-  }, [open])
+  }, [open, book])
 
-  const validateFields = (fieldInconsistencyId) => {
+  const validateFields = () => {
     if (!name) {
-      setFieldInconsistencyId('name')
+      setInconsistency('Parece que você não informou o nome do livro. Preciso desta informação :)')
+      return false
+    }
+    if (!author) {
+      setInconsistency('Não sei qual o autor deste livro. Esta informação é importante para mim :)')
+      return false
+    }
+    if (!storage) {
+      setInconsistency('Preciso que você me fale qual o local onde este livro está :)')
+      return false
+    }
+    if (!year) {
+      setInconsistency('Conte-me o ano de lançamento deste livro e armazenarei aqui para que você possa consultá-lo futuramente :)')
       return false
     }
     return true
@@ -118,7 +104,7 @@ export default function FormDialog({ book, authors, storages, handleUpdateBook, 
     <>
       {book && <Dialog classes={{ paper: classes.paper }} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Alteração do Livro</DialogTitle>
-        <AlertInconsistency fieldInconsistencyId={fieldInconsistencyId} />
+        {inconsistency && <Alert variant="filled" severity="warning">{inconsistency}</Alert>}
         <DialogContent>
           <DialogContentText>
             Informe os dados do livro.

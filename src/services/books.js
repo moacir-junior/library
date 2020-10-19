@@ -9,9 +9,33 @@ const createBook = async book => {
   }
 }
 
-const readBooks = async () => {
+const readBooks = async (authorId, storageId) => {
+  let params = []
+  let url = 'http://localhost:8000/books'
+
+  if(authorId)
+    params.push(`author=${authorId}`)
+
+  if(storageId)
+    params.push(`storage=${storageId}`)
+
+  if(params.length){
+    url = url.concat('?')
+
+    params.forEach((param, index) => {
+      if(index === 0){
+        url = url.concat(param) 
+      }
+      else{
+        url = url.concat(`&${param}`)
+      }
+    });
+  }
+
+  console.log('URL', url)
+  
   try {
-    const res = await axios.get('http://localhost:8000/books')
+    const res = await axios.get(url)
     return res.data
   } catch (err) {
     return err

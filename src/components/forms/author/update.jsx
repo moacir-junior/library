@@ -13,48 +13,22 @@ const useStyles = makeStyles(() => ({
   paper: {
     minWidth: '80%',
   },
-  button: {
-    backgroundColor: '#2d4957',
-    color: '#fff',
-    right: '0',
-    marginTop: '2ch',
-    '&:hover': {
-      backgroundColor: '#42687a'
-    }
-  },
-  title: {
-    fontSize: '1.5rem',
-  }
 }))
-
-function AlertInconsistency({ fieldInconsistencyId }) {
-  switch (fieldInconsistencyId) {
-    case 'name':
-      document.querySelector('#name').focus()
-      return (
-        <Alert variant="filled" severity="warning">
-          Parece que você não informou o nome do autor. Preciso desta informação :)
-        </Alert>
-      )
-    default:
-      return <></>
-  }
-}
 
 export default function FormDialog({ author, handleUpdateAuthor, open, setOpen }) {
   const classes = useStyles()
-  const [fieldInconsistencyId, setFieldInconsistencyId] = useState('')
+  const [inconsistency, setInconsistency] = useState('')
   const [name, setName] = useState('')
 
   useEffect(() => {
     if(open){
       setName(author.name)
     }
-  }, [open])
+  }, [open, author])
 
-  const validateFields = (fieldInconsistencyId) => {
+  const validateFields = () => {
     if (!name) {
-      setFieldInconsistencyId('name')
+      setInconsistency('Parece que você não informou o nome do autor. Preciso desta informação :)')
       return false
     }
     return true
@@ -75,13 +49,11 @@ export default function FormDialog({ author, handleUpdateAuthor, open, setOpen }
     setOpen(false)
   }
 
-  console.log('Passou por aqui')
-
   return (
     <>
       {author && <Dialog classes={{ paper: classes.paper }} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Alteração do Autor</DialogTitle>
-        <AlertInconsistency fieldInconsistencyId={fieldInconsistencyId} />
+        {inconsistency && <Alert variant="filled" severity="warning">{inconsistency}</Alert>}
         <DialogContent>
           <DialogContentText>
             Informe os dados do autor.
