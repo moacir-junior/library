@@ -22,24 +22,24 @@ const useStyles = makeStyles({
   },
 })
 
-export default function CardInfo(props) {
+export default function CardInfo({ link, cardTitle, elementTitle, elementSubtitle, information }) {
   const classes = useStyles()
 
   return (
-    <Link to={props.link} className={classes.link}>
+    <Link to={link} className={classes.link}>
       <Card className={classes.root}>
         <CardContent>
           <Typography className={classes.title} color="textSecondary" gutterBottom>
-            {props.cardTitle}
+            {cardTitle}
           </Typography>
           <Typography variant="h5" component="h2">
-            {props.elementTitle}
+            {elementTitle}
           </Typography>
           <Typography className={classes.pos} color="textSecondary">
-            {props.elementSubtitle}
+            {elementSubtitle}
           </Typography>
           <Typography variant="body2" component="p">
-            {props.information}
+            {information}
           </Typography>
         </CardContent>
       </Card>

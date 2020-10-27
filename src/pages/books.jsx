@@ -10,6 +10,7 @@ import DetailsBook from '../components/details/book'
 import AddBook from '../components/forms/book/add'
 import UpdateBook from '../components/forms/book/update'
 import FilterBook from '../components/forms/book/filter'
+import PaginationControl from '../components/paginationControl'
 
 export default function Books() {
   const [filter, setFilter] = useState({
@@ -24,6 +25,8 @@ export default function Books() {
   const [addOpen, setAddOpen] = useState(false)
   const [detailsOpen, setDetailsOpen] = useState(false)
   const [updateOpen, setUpdateOpen] = useState(false)
+  const [pageBooks, setPageBooks] = useState(0)
+  const [pagesizeBooks, setPagesizeBooks] = useState(10)
 
   const readAuthors = () => {
     AuthorService.readAuthors()
@@ -38,7 +41,7 @@ export default function Books() {
   }
 
   const readBooks = () => {
-    BookService.readBooks(filter.authorId, filter.storageId)
+    BookService.readBooks(filter.authorId, filter.storageId, pageBooks, pagesizeBooks)
       .then(books => setBooks(books))
       .catch(console.log)
   }
@@ -75,7 +78,7 @@ export default function Books() {
 
   useEffect(() => {
     readBooks()
-  }, [filter])
+  }, [filter, pageBooks, pagesizeBooks])
 
   return (
     <PageWrapper >
@@ -119,6 +122,13 @@ export default function Books() {
         open={updateOpen} 
         setOpen={setUpdateOpen}
       />
+      <PaginationControl 
+        count={books.length}
+        page={pageBooks}
+        setPage={setPageBooks}
+        pagesize={pagesizeBooks}
+        setPagesize={setPagesizeBooks}
+      />      
     </PageWrapper>
   )
 }

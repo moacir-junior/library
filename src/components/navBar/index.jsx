@@ -18,10 +18,10 @@ const useStyles = makeStyles({
   }
 })
 
-function IconLink(props) {
+function IconLink({ type }) {
   const classes = useStyles()
 
-  switch (props.type) {
+  switch (type) {
     case 'home':
       return (
         <Link to="/">

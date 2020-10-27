@@ -9,7 +9,7 @@ const createBook = async book => {
   }
 }
 
-const readBooks = async (authorId, storageId) => {
+const readBooks = async (authorId, storageId, page, pagesize) => {
   let params = []
   let url = 'http://localhost:8000/books'
 
@@ -18,6 +18,12 @@ const readBooks = async (authorId, storageId) => {
 
   if(storageId)
     params.push(`storage=${storageId}`)
+
+  if(page)
+    params.push(`page=${page}`)
+
+  if(pagesize)
+    params.push(`pagesize=${pagesize}`)
 
   if(params.length){
     url = url.concat('?')
