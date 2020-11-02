@@ -41,7 +41,7 @@ export default function Books() {
   }
 
   const readBooks = () => {
-    BookService.readBooks(filter.authorId, filter.storageId, pageBooks, pagesizeBooks)
+    BookService.readBooks(filter, pageBooks, pagesizeBooks)
       .then(books => setBooks(books))
       .catch(console.log)
   }

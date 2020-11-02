@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
+import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
@@ -17,34 +18,34 @@ const useStyles = makeStyles(() => ({
 
 export default function FilterBook({ authors, storages, open, setOpen, setFilter }) {
   const classes = useStyles()
-  const [author, setAuthor] = useState(null)
-  const [storage, setStorage] = useState(null)
+  let filter = {}
 
   const handleClose = () => {
     setOpen(false)
   }
 
   const handleFilter = () => {
-    setFilter({
-      authorId: author?.id,
-      storageId: storage?.id,
-    })
+    setFilter(filter)
     setOpen(false)
   }
 
-  const handleChangeAuthor = (selectAuthorName) => {
+  const handleChangeName = name => {
+    filter.name = name
+  }
+
+  const handleChangeAuthor = selectAuthorName => {
     authors.forEach(author => {
       if (author.name === selectAuthorName) {
-        setAuthor(author)
+        filter.authorId = author.id
         return
       }
     });
   }
 
-  const handleChangeStorage = (selectStorageName) => {
+  const handleChangeStorage = selectStorageName => {
     storages.forEach(storage => {
       if (storage.name === selectStorageName) {
-        setStorage(storage)
+        filter.storageId = storage.id
         return
       }
     })
@@ -58,6 +59,8 @@ export default function FilterBook({ authors, storages, open, setOpen, setFilter
           <DialogContentText>
             Filtrar por:
           </DialogContentText>
+          <TextField autoFocus id="name" label="Nome" type="text" fullWidth
+            onChange={event => handleChangeName(event.target.value)} />
           <SelectAuthor authors={authors} id="author"
             onChange={event => handleChangeAuthor(event.target.value)} />
           <SelectStorage storages={storages} id="storage"
