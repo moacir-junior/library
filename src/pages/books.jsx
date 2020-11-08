@@ -103,8 +103,7 @@ export default function Books() {
         setFilter={setFilter}
       />
       <BooksTable 
-        books={books} 
-        handleRemoveBook={removeBook} 
+        books={books}        
         setSelectBook={setSelectBook} 
         setDetailsOpen={setDetailsOpen} 
       />
@@ -112,13 +111,14 @@ export default function Books() {
         book={selectBook} 
         open={detailsOpen} 
         setOpen={setDetailsOpen} 
-        setUpdateOpen={setUpdateOpen} 
+        setUpdateOpen={setUpdateOpen}
+        handleRemoveBook={removeBook} 
       />
       <UpdateBook 
         book={selectBook} 
         authors={authors} 
         storages={storages} 
-        handleUpdateBook={updateBook} 
+        handleUpdateBook={updateBook}        
         open={updateOpen} 
         setOpen={setUpdateOpen}
       />

@@ -21,29 +21,24 @@ const useStyles = makeStyles(() => ({
 
 export default function FormDialog({ authors, storages, open, setOpen, handleAddBook }) {
   const classes = useStyles()
-  const [inconsistency, setInconsistency] = useState('')
-  const [name, setName] = useState('')
-  const [author, setAuthor] = useState(null)
-  const [storage, setStorage] = useState(null)
-  const [year, setYear] = useState(0)
-  const [comment, setComment] = useState('')
-  const [evaluation, setEvaluation] = useState(0)
+  let inconsistency = ''
+  let book = {}
 
   const validateFields = () => {
-    if (!name) {
-      setInconsistency('Parece que você não informou o nome do livro. Preciso desta informação :)')
+    if (!book.name) {
+      inconsistency = 'Parece que você não informou o nome do livro. Preciso desta informação :)'
       return false
     }
-    if (!author) {
-      setInconsistency('Não sei qual o autor deste livro. Esta informação é importante para mim :)')
+    if (!book.author) {
+      inconsistency = 'Não sei qual o autor deste livro. Esta informação é importante para mim :)'
       return false
     }
-    if (!storage) {
-      setInconsistency('Preciso que você me fale qual o local onde este livro está :)')
+    if (!book.storage) {
+      inconsistency = 'Preciso que você me fale qual o local onde este livro está :)'
       return false
     }
-    if (!year) {
-      setInconsistency('Conte-me o ano de lançamento deste livro e armazenarei aqui para que você possa consultá-lo futuramente :)')
+    if (!book.year) {
+      inconsistency = 'Conte-me o ano de lançamento deste livro e armazenarei aqui para que você possa consultá-lo futuramente :)'
       return false
     }
     return true
@@ -58,17 +53,6 @@ export default function FormDialog({ authors, storages, open, setOpen, handleAdd
       return
     }
 
-    const book = {
-      name,
-      author,
-      author_id: author.id,
-      storage,
-      storage_id: storage.id,
-      year,
-      comment,
-      eval: evaluation,
-    }
-
     handleAddBook(book)
     setOpen(false)
   }
@@ -76,7 +60,8 @@ export default function FormDialog({ authors, storages, open, setOpen, handleAdd
   const handleChangeAuthor = (selectAuthorName) => {
     authors.forEach(author => {
       if (author.name === selectAuthorName) {
-        setAuthor(author)
+        book.author = author
+        book.author_id = author.id
         return
       }
     });
@@ -85,7 +70,8 @@ export default function FormDialog({ authors, storages, open, setOpen, handleAdd
   const handleChangeStorage = (selectStorageName) => {
     storages.forEach(storage => {
       if (storage.name === selectStorageName) {
-        setStorage(storage)
+        book.storage = storage
+        book.storage_id = storage.id
         return
       }
     })
@@ -101,20 +87,20 @@ export default function FormDialog({ authors, storages, open, setOpen, handleAdd
             Informe os dados do livro.
           </DialogContentText>
           <TextField autoFocus id="name" label="Nome" type="text" fullWidth
-            onChange={event => setName(event.target.value)} />
+            onChange={event => book.name = event.target.value} />
           <SelectAuthor authors={authors} id="author"
             onChange={event => handleChangeAuthor(event.target.value)} />
           <SelectStorage storages={storages} id="storage"
             onChange={event => handleChangeStorage(event.target.value)} />
           <TextField id="year" label="Ano" type="number" fullWidth
-            onChange={event => setYear(Number(event.target.value))} />
+            onChange={event => book.year = Number(event.target.value)} />
           <TextField id="comment" label="Comentário" type="text" fullWidth
-            onChange={event => setComment(event.target.value)} />
+            onChange={event => book.comment = event.target.value} />
           <Typography component="legend">Avaliação</Typography>
           <Rating
             name="simple-controlled"
-            value={evaluation}
-            onChange={(event, newValue) => setEvaluation(newValue)}
+            value={book.eval}
+            onChange={(event, newValue) => book.eval = newValue}
           />
         </DialogContent>
         <DialogActions>

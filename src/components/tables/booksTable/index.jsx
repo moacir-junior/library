@@ -26,14 +26,9 @@ function StarRate({ rate }) {
   return Array(rate).fill(1).map((star, index) => <StarRateIcon className={classes.star} key={index} />)
 }
 
-export default function BooksTable({ books, handleRemoveBook, setSelectBook, setDetailsOpen }) {
+export default function BooksTable({ books, setSelectBook, setDetailsOpen }) {
   const classes = useStyles()
   const fullSize = useMediaQuery('(min-width:1050px)');
-
-  const handleRemoveOption = bookId => {
-    console.log(`Livro com Id ${bookId} removido.`)
-    handleRemoveBook(bookId)
-  }
 
   return (
     <TableContainer component={Paper}>
@@ -46,7 +41,6 @@ export default function BooksTable({ books, handleRemoveBook, setSelectBook, set
             {fullSize && <TableCell className={classes.tableCell} align="center">Ano</TableCell>}
             {fullSize && <TableCell className={classes.tableCell} align="center">Avaliação</TableCell>}
             {fullSize && <TableCell className={classes.tableCell} align="center">Comentário</TableCell>}
-            {fullSize && <TableCell className={classes.tableCell} align="center">Opções</TableCell>}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -56,16 +50,11 @@ export default function BooksTable({ books, handleRemoveBook, setSelectBook, set
               setDetailsOpen(true)
             }}>
               <TableCell align="center">{book.name}</TableCell>
-              {fullSize && <TableCell align="center">{book.author.name}</TableCell>}
-              {fullSize && <TableCell align="center">{book.storage.name}</TableCell>}
-              {fullSize && <TableCell align="center">{book.year}</TableCell>}
-              {fullSize && <TableCell align="center"><StarRate rate={book.eval} /></TableCell>}
-              {fullSize && <TableCell align="center">{book.comment}</TableCell>}
-              {fullSize && <TableCell align="center">
-                <Button onClick={() => handleRemoveOption(book.id)} tooltip={"Vai excluir"} >
-                  <DeleteForeverIcon />
-                </Button>
-              </TableCell>}
+                {fullSize && <TableCell align="center">{book.author.name}</TableCell>}
+                {fullSize && <TableCell align="center">{book.storage.name}</TableCell>}
+                {fullSize && <TableCell align="center">{book.year}</TableCell>}
+                {fullSize && <TableCell align="center"><StarRate rate={book.eval} /></TableCell>}
+                {fullSize && <TableCell align="center">{book.comment}</TableCell>}
             </TableRow>
           )}
         </TableBody>

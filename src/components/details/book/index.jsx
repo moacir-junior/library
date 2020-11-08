@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
@@ -17,6 +17,7 @@ import EventIcon from '@material-ui/icons/Event'
 import StarRateIcon from '@material-ui/icons/StarRate'
 import ModeCommentIcon from '@material-ui/icons/ModeComment'
 import { makeStyles } from '@material-ui/core/styles'
+import ConfirmationAlert from './components/ConfirmationAlert'
 
 const useStyles = makeStyles(() => ({
   paper: {
@@ -24,7 +25,7 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-export default function DetailsAuthor({ book, open, setOpen, setUpdateOpen }) {
+export default function DetailsAuthor({ book, open, setOpen, setUpdateOpen, handleRemoveBook }) {
   const classes = useStyles()
 
   const handleUpdate = () => {
@@ -37,8 +38,9 @@ export default function DetailsAuthor({ book, open, setOpen, setUpdateOpen }) {
   }
 
   return (
-    <div>
+    <div>      
       {open && <Dialog classes={{ paper: classes.paper }} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+        
         <DialogTitle id="form-dialog-title">{book.name}</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -99,7 +101,8 @@ export default function DetailsAuthor({ book, open, setOpen, setUpdateOpen }) {
           <Button onClick={handleUpdate}>
             Alterar
           </Button>
-          <Button onClick={handleClose}>
+          <ConfirmationAlert book={book} handleRemoveBook={handleRemoveBook} handleCloseParent={handleClose}/>
+          <Button onClick={handleClose} >
             Fechar
           </Button>
         </DialogActions>

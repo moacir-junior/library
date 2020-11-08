@@ -10,17 +10,20 @@ const createBook = async book => {
 }
 
 const readBooks = async (filter, page, pagesize) => {
+  debugger
   let params = []
   let url = 'http://localhost:8000/books'
 
-  if(filter.name)
-    params.push(`name=${filter.name}`)
+  if(filter){
+    if(filter.name)
+      params.push(`name=${filter.name}`)
+    
+    if(filter.authorId)
+      params.push(`author=${filter.authorId}`)
   
-  if(filter.authorId)
-    params.push(`author=${filter.authorId}`)
-
-  if(filter.storageId)
-    params.push(`storage=${filter.storageId}`)
+    if(filter.storageId)
+      params.push(`storage=${filter.storageId}`)
+  }
 
   if(page)
     params.push(`page=${page}`)

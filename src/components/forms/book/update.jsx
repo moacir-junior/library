@@ -30,7 +30,7 @@ export default function FormDialog({ book, authors, storages, handleUpdateBook, 
   const [evaluation, setEvaluation] = useState(0)
 
   useEffect(() => {
-    if(open){
+    if (open) {
       setName(book.name)
       setAuthor(book.author)
       setStorage(book.storage)
@@ -129,10 +129,10 @@ export default function FormDialog({ book, authors, storages, handleUpdateBook, 
         <DialogActions>
           <Button onClick={handleSave} >
             Salvar
-        </Button>
+          </Button>
           <Button onClick={handleClose} >
             Cancelar
-        </Button>
+          </Button>
         </DialogActions>
       </Dialog>}
     </>
